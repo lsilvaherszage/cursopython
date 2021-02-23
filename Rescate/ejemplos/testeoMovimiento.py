@@ -15,3 +15,4 @@ wheel_right.setPosition(float("inf"))
 while robot.step(timeStep) != -1:
     wheel_left.setVelocity(maxVel/2)
     wheel_right.setVelocity(maxVel)
+    print(robot.getTime())
