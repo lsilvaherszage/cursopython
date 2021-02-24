@@ -141,5 +141,8 @@ En nuestro simulador de rescate, vamos a codificar nuestro mensaje usando el mó
 > message = struct.pack('i i c', v1, v2, carac)  
 > emitter.send(message)
 
+## Tiempo de ejecución
+
+> *robot*.getTime() devuelve el tiempo de ejecución del simulador
 
 

@@ -15,8 +15,22 @@ sdfd.enable(timeStep)
 sdfi=robot.getDistanceSensor("ps7")
 sdfi.enable(timeStep)
 
+si1=robot.getDistanceSensor("ps6")
+si1.enable(timeStep)
+
+si2=robot.getDistanceSensor("ps5")
+si2.enable(timeStep)
+
 wheel_left.setPosition(float("inf"))
 wheel_right.setPosition(float("inf"))
+
+def estoyCercaIzquierda(valor):
+    promedio=(si1.getValue()+si2.getValue())/2
+    if promedio<valor:
+        return True 
+    else:
+        return False
+
 
 while robot.step(timeStep) != -1:
     wheel_left.setVelocity(maxVel)
