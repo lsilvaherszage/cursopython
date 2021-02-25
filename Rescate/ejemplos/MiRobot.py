@@ -12,6 +12,19 @@ class MiRobot():
 
         self.__wheel_left.setPosition(float("inf"))
         self.__wheel_right.setPosition(float("inf"))
+        self.__sdFrente=[self.__robot.getDistanceSensor("ps0"),  self.__robot.getDistanceSensor("ps7")]
+        self.__sdIzquierda=[self.__robot.getDistanceSensor("ps5"),  self.__robot.getDistanceSensor("ps6")]
+        self.__sdDerecha=[self.__robot.getDistanceSensor("ps1"),  self.__robot.getDistanceSensor("ps2")]
+        self.__sdAtras=[self.__robot.getDistanceSensor("ps3"),  self.__robot.getDistanceSensor("ps4")]
+        for sd in self.__sdFrente:
+            sd.enable(MiRobot.timeStep)
+        for sd in self.__sdIzquierda:
+            sd.enable(MiRobot.timeStep)
+        for sd in self.__sdDerecha:
+            sd.enable(MiRobot.timeStep)
+        for sd in self.__sdAtras:
+            sd.enable(MiRobot.timeStep)
+
 
     def setVi(self, valor):
         self.__wheel_left.setVelocity(valor)
@@ -36,11 +49,20 @@ class MiRobot():
 
     def girar90I(self):
         self.velocidad(-2, 2)
-        self.espera(1.1)
+        self.espera(1.05)
 
     def girar90D(self):
         self.velocidad(2, -2)
-        self.espera(1.1)
+        self.espera(1.05)
 
     def step(self):
         return self.__robot.step(MiRobot.timeStep)
+
+    def distanciaFrente(self):
+        valores=[val.getValue() for val in self.__sdFrente]
+        return min(valores)
+        #return sum(valores)/len(valores)
+
+    def distanciaIzquierda(self):
+        valores=[val.getValue() for val in self.__sdIzquierda]
+        return min(valores)
