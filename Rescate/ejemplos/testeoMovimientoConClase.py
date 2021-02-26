@@ -2,7 +2,7 @@ from MiRobot import MiRobot
 
 robot = MiRobot() #creo un objeto de la clase Robot
 
-def caminata():
+def caminataPorI():
     if robot.distanciaFrente()<0.04:
         robot.girar90D()
     else:
@@ -12,4 +12,4 @@ def caminata():
             robot.velocidad(6, 6)
 
 while robot.step() != -1:
-    caminata()
+    caminataPorI()
