@@ -1,7 +1,8 @@
 from controller import Robot
+from abc import ABC, abstractmethod
 import time
 
-class MiRobot():
+class MiRobotA(ABC):
     timeStep = 32 #Cuantos ciclos de ejecucion tiene el simulador cada vez que hago un step
     maxVel=6.28
 
@@ -17,13 +18,13 @@ class MiRobot():
         self.__sdDerecha=[self.__robot.getDistanceSensor("ps1"),  self.__robot.getDistanceSensor("ps2")]
         self.__sdAtras=[self.__robot.getDistanceSensor("ps3"),  self.__robot.getDistanceSensor("ps4")]
         for sd in self.__sdFrente:
-            sd.enable(MiRobot.timeStep)
+            sd.enable(MiRobotA.timeStep)
         for sd in self.__sdIzquierda:
-            sd.enable(MiRobot.timeStep)
+            sd.enable(MiRobotA.timeStep)
         for sd in self.__sdDerecha:
-            sd.enable(MiRobot.timeStep)
+            sd.enable(MiRobotA.timeStep)
         for sd in self.__sdAtras:
-            sd.enable(MiRobot.timeStep)
+            sd.enable(MiRobotA.timeStep)
 
 
     def setVi(self, valor):
@@ -45,7 +46,7 @@ class MiRobot():
         #   hacete un step
         tiempoArranque=self.__robot.getTime()
         while self.__robot.getTime()-tiempoArranque<tiempoEspera:
-            self.__robot.step(MiRobot.timeStep)
+            self.step()
 
     def girar90I(self):
         self.velocidad(-2, 2)
@@ -56,7 +57,7 @@ class MiRobot():
         self.espera(1.05)
 
     def step(self):
-        return self.__robot.step(MiRobot.timeStep)
+        return self.__robot.step(MiRobotA.timeStep)
 
     def distanciaFrente(self):
         valores=[val.getValue() for val in self.__sdFrente]
@@ -66,3 +67,34 @@ class MiRobot():
     def distanciaIzquierda(self):
         valores=[val.getValue() for val in self.__sdIzquierda]
         return min(valores)
+
+    def distanciaDerecha(self):
+        valores=[val.getValue() for val in self.__sdDerecha]
+        return min(valores)
+
+    @abstractmethod
+    def caminata(self):
+        pass
+
+
+class MiRobotI(MiRobotA):
+
+    def caminata(self):
+        if self.distanciaFrente()<0.04:
+            self.girar90D()
+        else:
+            if self.distanciaIzquierda()>0.06:
+                self.velocidad(-1, 1)
+            else:
+                self.velocidad(6, 6)
+
+class MiRobotD(MiRobotA):
+
+    def caminata(self):
+        if self.distanciaFrente()<0.04:
+            self.girar90I()
+        else:
+            if self.distanciaDerecha()>0.06:
+                self.velocidad(1, -1)
+            else:
+                self.velocidad(6, 6)
