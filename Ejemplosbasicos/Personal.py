@@ -65,7 +65,7 @@ class Docente(Personal):
         return "Docente"
 
     def __str__(self):
-        return super().__str__()+" - Bajo la dirección de {}".format(self.directivo)
+        return super().__str__()+" - Bajo la dirección de {}".format(self.directivo.apellido)
 
 # Probablemente sería mejor tener la clase Curso con un docente y una lista de estudiantes.
 

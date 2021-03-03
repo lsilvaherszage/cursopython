@@ -27,4 +27,4 @@ def file3(archi, pal):
 
 #file1()
 #file2()
-#print(file3("Contenido\Ejemplos básicos\quijote.txt", "en"))
+print(file3("Contenido\Ejemplosbasicos\quijot.txt", "en"))

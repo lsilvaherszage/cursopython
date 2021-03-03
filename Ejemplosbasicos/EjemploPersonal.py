@@ -9,5 +9,5 @@ doc1=Personal.Docente("doc1", "doc1", date(1988, 5, 28), "P5A", dir1)
 doc2=Personal.Docente("doc2", "doc2", date(1988, 5, 28), "P6B", dir1)
 doc3=Personal.Docente("doc3", "doc3", date(1988, 5, 28), "S1A", dir2)
 
-print(dir1)
-dir1.listarPersonal()
+print(dir2)
+dir2.listarPersonal()
