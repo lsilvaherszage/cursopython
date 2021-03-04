@@ -2,12 +2,16 @@ import mysql.connector
 
 class ConexionBD:
 
-    def __init__(self):
+    def __init__(self, host, user, passwd, database):
+        self.host=host
+        self.user=user
+        self.passwd=passwd
+        self.database=database
         self.mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="cursopython",
-            database="personal"
+            host=self.host,
+            user=self.user,
+            passwd=self.passwd,
+            database=self.database
         )
         self.cur = self.mydb.cursor()
 
