@@ -5,6 +5,6 @@ import BasesDeDatos
 with BasesDeDatos.ConexionBD("db4free.net", "rootzabala", "cursopython", "personalzabala") as base:
     #base.cur.execute("SHOW TABLES")
     base.cur.execute("Select * from alumnos")
-    for tab in base.cur:
-        print(tab)
+    for ele in base.cur:
+        print(ele)
 
