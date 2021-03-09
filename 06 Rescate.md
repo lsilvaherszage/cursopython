@@ -130,7 +130,7 @@ Para obtener la imagen, simplemente hacemos:
 
 Nos permite enviar mensajes al supervisor. 
 
-> *em*=*robot*.getEmmiter("emmiter")
+> *em*=*robot*.getEmitter("emitter")
 
 No hace falta habilitarlo. Para mandar un mensaje es:
 
