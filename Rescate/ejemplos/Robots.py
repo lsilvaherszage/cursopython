@@ -1,11 +1,13 @@
 from controller import Robot
 from abc import ABC, abstractmethod
 import time
+import struct
 
 class MiRobotA(ABC):
     timeStep = 32 #Cuantos ciclos de ejecucion tiene el simulador cada vez que hago un step
     maxVel=6.28
     pozo=b';;;\xff'
+    messageSent=False
 
     def __init__(self):
         self.__robot = Robot() #creo un objeto de la clase Robot
@@ -30,6 +32,39 @@ class MiRobotA(ABC):
         self.__camaraFrente.enable(MiRobotA.timeStep)
         self.__camaraPiso=self.__robot.getCamera("colour_sensor")
         self.__camaraPiso.enable(MiRobotA.timeStep)
+
+        #Emisor
+        self.__emitter = self.__robot.getEmitter("emitter")
+
+        #GPS
+        self.__gps = self.__robot.getGPS("gps")
+        self.__gps.enable(MiRobotA.timeStep)
+
+        #Sensores de temperatura
+        self.__left_heat_sensor = self.__robot.getLightSensor("left_heat_sensor")
+        self.__right_heat_sensor = self.__robot.getLightSensor("right_heat_sensor")
+
+        self.__left_heat_sensor.enable(MiRobotA.timeStep)
+        self.__right_heat_sensor.enable(MiRobotA.timeStep)
+
+    def __sendMessage(self, v1, v2, carac):
+        message = struct.pack('i i c', v1, v2, carac)
+        self.__emitter.send(message)
+
+    def sendVictimMessage(self):   
+        position = self.__gps.getValues()
+        if not MiRobotA.messageSent:
+            self.__sendMessage(int(position[0] * 100), int(position[2] * 100), b'H')
+            MiRobotA.messageSent = True
+
+    def stopAtHeatedVictim(self):
+        if self.__left_heat_sensor.getValue() > 32 or self.__right_heat_sensor.getValue() > 32:
+            print('Encontre una victima con temperatura')
+            self.parar()
+            self.sendVictimMessage()
+            self.espera(3.1)
+        else:
+            MirobotA.messageSent = False
 
     def setVi(self, valor):
         self.__wheel_left.setVelocity(valor)

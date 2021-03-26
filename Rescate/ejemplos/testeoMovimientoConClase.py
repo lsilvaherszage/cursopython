@@ -6,5 +6,6 @@ pozo=b';;;\xff'
 
 while robot.step() != -1:
     robot.caminata()
+    robot.stopAtHeatedVictims()
     robot.noTeCaigas()
         
